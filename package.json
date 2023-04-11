@@ -6,8 +6,17 @@
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "jsonwebtoken": "^9.0.0",
+    "nodemon": "^2.0.22",
     "pg": "^8.10.0"
   },
+  "scripts": {
+    "start": "nodemon src/server.js",
+    "prod": "node dist/server.js",
+    "dev": "nodemon src/server.js"
+  },
+  "keywords": [],
+  "author": "Mateus Seiboth",
+  "license": "MIT",
   "devDependencies": {
     "@types/node": "^18.15.11"
   }
