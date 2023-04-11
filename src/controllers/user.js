@@ -1,7 +1,7 @@
 const UserModel = require('../models/user');
 
 const bcrypt = require('bcrypt');
-const { signAccessToken } = require('../utils/jwt');
+const { generateToken } = require('../utils/jwt');
 
 exports.createUser = async (req, res) => {
   try {
@@ -43,7 +43,9 @@ exports.authenticateUser = async (req, res) => {
       return res.status(401).json({ error: 'Invalid username or password' });
     }
 
-    const token = signAccessToken(user.id);
+    const payload = {id: user.id};
+
+    const token = generateToken(payload);
 
     res.status(200).json({ token });
   } catch (err) {
