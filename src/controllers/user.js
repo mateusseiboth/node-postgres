@@ -28,9 +28,9 @@ exports.createUser = async (req, res) => {
 };
 
 exports.authenticateUser = async (req, res) => {
+  
   try {
     const { username, password } = req.body;
-
     const user = await UserModel.findUserByUsername(username);
 
     if (!user) {

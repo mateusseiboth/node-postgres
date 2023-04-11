@@ -2,7 +2,6 @@ const pool = require('../database/db');
 
 const insertUser = async (user) => {
   const { username, password } = user;
-  console.log(username, password);
   const query = {
     text: 'INSERT INTO usuario(username, password) VALUES($1, $2) RETURNING *',
     values: [username, password]
