@@ -15,4 +15,8 @@ router.put('/update', verifyToken, carController.updateCar, (req, res) => {
     res.status(200).json({message: 'car atualizado com sucesso'})
 });
 
+router.get('/list', verifyToken, carController.listCar, (req, res) => {
+  
+});
+
 module.exports = router;
