@@ -10,6 +10,26 @@ const createTicket = async (req, res, next) => {
   }
 };
 
+const listarTickets = async (req, res) =>{
+  try{
+  const tickets = await Ticket.listarTickets();
+  res.send(tickets);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Erro ao listar Ticket' });
+  }
+};
+
+const listarTicketsAll = async (req, res) =>{
+  try{
+  const tickets = await Ticket.listarTicketsAll();
+  res.send(tickets);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Erro ao listar Ticket' });
+  }
+};
+
 const encerrarTicket = async (req, res) => {
     try {
       const { id } = req.params;
@@ -22,4 +42,4 @@ const encerrarTicket = async (req, res) => {
   };
 
 
-module.exports = { createTicket, encerrarTicket };
+module.exports = { createTicket, encerrarTicket, listarTickets,listarTicketsAll };

@@ -10,6 +10,17 @@ const createClient = async (req, res, next) => {
   }
 };
 
+
+const listarCliente = async (req, res) => {
+  try{
+    const clientes = await Client.listarCliente();
+    res.send(clientes);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({error: err.message});
+  }
+};
+
 const updateClient = async (req, res) => {
     try {
       const client = req.body;
@@ -34,4 +45,4 @@ const updateClient = async (req, res) => {
 
 
 
-module.exports = { createClient, updateClient, deleteClient };
+module.exports = { createClient, updateClient, deleteClient, listarCliente };

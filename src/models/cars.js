@@ -10,6 +10,18 @@ const { placa, cliente_id } = car;
   return result.rows[0];
 };
 
+const listCar = async () => {
+ 
+    const query = {
+      text: `select car.id id, car.placa placa, car.cliente_id cliente_id, cli.nome as cliente_nome 
+      from carro car
+      full join cliente cli
+      on cli.id = car.cliente_id`,
+     
+    };
+    const result = await pool.query(query);
+    return result.rows;
+  };
 
 const updateCar = async (car) => {
     const { placa, cliente_id, id } = car;
@@ -31,5 +43,5 @@ const deleteCar = async (id) => {
 }
 
 module.exports = {
-    insertCar, deleteCar, updateCar
+    insertCar, deleteCar, updateCar, listCar
 };

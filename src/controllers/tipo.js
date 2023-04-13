@@ -21,6 +21,16 @@ const updateTipo = async (req, res) => {
   }
 };
 
+const listarTipos = async (req, res) => {
+  try {
+    const tipos = await Tipo.listarTipos();
+    res.send(tipos);
+  } catch (error){
+    console.log(error);
+    res.status(500).json({ error: 'Erro ao listar tipo' });
+  }
+};
+
 const deleteTipo = async (req, res) => {
   try {
     const { id } = req.params;
@@ -32,4 +42,4 @@ const deleteTipo = async (req, res) => {
   }
 };
 
-module.exports = { createTipo, deleteTipo, updateTipo };
+module.exports = { createTipo, deleteTipo, updateTipo, listarTipos };

@@ -11,4 +11,6 @@ router.delete('/:id', verifyToken, vagaController.deleteVaga, (req, res) => {
   res.status(200).json({ message: 'Vaga excluída com sucesso' });
 });
 
+router.get('/list', verifyToken, vagaController.listarVagas, (req, res) => {})
+
 module.exports = router;

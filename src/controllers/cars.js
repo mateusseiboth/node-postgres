@@ -10,6 +10,15 @@ const createCar = async (req, res, next) => {
   }
 };
 
+const listCar = async (req, res) => {
+  try {
+    const cars = await Car.listCar();
+    res.send(cars);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
 const updateCar = async (req, res) => {
   try {
     const car = req.body;
@@ -32,4 +41,4 @@ const deleteCar = async (req, res) => {
   }
 };
 
-module.exports = { createCar, deleteCar, updateCar };
+module.exports = { createCar, deleteCar, updateCar, listCar };

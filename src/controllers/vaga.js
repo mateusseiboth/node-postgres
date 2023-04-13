@@ -10,6 +10,15 @@ const createVaga = async (req, res, next) => {
   }
 };
 
+const listarVagas = async (req,res) =>{
+  try{
+    const vagas = await Vaga.listarVagas();
+    res.send(vagas);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 const deleteVaga = async (req, res) => {
   try {
     const { id } = req.params;
@@ -22,4 +31,4 @@ const deleteVaga = async (req, res) => {
   }
 };
 
-module.exports = { createVaga, deleteVaga };
+module.exports = { createVaga, deleteVaga, listarVagas };

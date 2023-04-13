@@ -10,6 +10,11 @@ const { nome, cpf, telefone } = client;
   return result.rows[0];
 };
 
+const listarCliente = async () =>{
+  const query = {text: 'select * from cliente'};
+  const result = await pool.query(query);
+  return result.rows;
+}
 
 const updateClient = async (client) => {
     const { nome, cpf, telefone, id } = client;
@@ -31,5 +36,5 @@ const deleteClient = async (id) => {
 }
 
 module.exports = {
-    insertClient, deleteClient, updateClient
+    insertClient, deleteClient, updateClient, listarCliente
 };

@@ -9,6 +9,16 @@ const insertVaga = async () => {
   return result.rows[0];
 };
 
+const listarVagas = async () =>{
+  const query ={
+    text: 'select * from vaga'
+  };
+  const result = await pool.query(query);
+  return result.rows;
+
+
+};
+
 const deleteVaga = async (id) => {
   const query = {
     text: 'delete from vaga where id=$1 RETURNING *',
@@ -19,5 +29,5 @@ const deleteVaga = async (id) => {
 }
 
 module.exports = {
-  insertVaga, deleteVaga
+  insertVaga, deleteVaga, listarVagas
 };
