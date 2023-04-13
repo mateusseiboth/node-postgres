@@ -23,7 +23,7 @@ const updateTipo = async (req, res) => {
 
 const listarTipos = async (req, res) => {
   try {
-    tipos = await Tipo.listarTipos();
+    const tipos = await Tipo.listarTipos();
     res.send(tipos);
   } catch (error){
     console.log(error);
