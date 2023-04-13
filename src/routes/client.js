@@ -15,4 +15,6 @@ router.put('/update', verifyToken, clientController.updateClient, (req, res) => 
     res.status(200).json({message: 'Client atualizado com sucesso'})
 });
 
+router.get('/list', verifyToken, clientController.listarCliente, (req, res)=>{});
+
 module.exports = router;
