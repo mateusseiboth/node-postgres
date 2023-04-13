@@ -15,4 +15,8 @@ router.put('/update', verifyToken, tipoController.updateTipo, (req, res) => {
     res.status(200).json({message: 'Tipo atualizado com sucesso'})
 });
 
+router.get('/list', verifyToken, tipoController.listarTipos, (req, res) => {
+    
+});
+
 module.exports = router;

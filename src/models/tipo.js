@@ -10,6 +10,12 @@ const { preco, descr } = tipo;
   return result.rows[0];
 };
 
+const listarTipos = async () => {
+  const query = {text: "select * from tipo"};
+  const result = await pool.query(query);
+  return result.rows;
+};
+
 
 const updateTipo = async (tipo) => {
     console.log(tipo);
@@ -32,5 +38,5 @@ const deleteTipo = async (id) => {
 }
 
 module.exports = {
-    insertTipo, deleteTipo, updateTipo
+    insertTipo, deleteTipo, updateTipo, listarTipos
 };
