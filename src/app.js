@@ -14,9 +14,11 @@ app.use(appBase, router);
 pool.connect((err) => {
   if (err) {
     console.error('Error connecting to database', err);
-    process.exit(1);
-  }
+    console.log('Desconectado da database');
+    // process.exit(1);
+  } else {
   console.log('Connected to database');
+  }
 });
 
 module.exports = app;
