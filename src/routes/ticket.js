@@ -11,5 +11,8 @@ router.put('/:id', verifyToken, ticketController.encerrarTicket, (req, res) => {
   res.status(200).json({ message: 'Ticket encerrado com sucesso' });
 });
 
+router.get('/listAtivo', verifyToken, ticketController.listarTickets, (req, res)=>{});
+router.get('/listAll', verifyToken, ticketController.listarTicketsAll, (req, res)=>{});
+
 
 module.exports = router;
