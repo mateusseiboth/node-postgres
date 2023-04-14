@@ -7,7 +7,7 @@ const insertUser = async (user) => {
     values: [username, password]
   };
   const result = await pool.query(query);
-  return result.rows[0];
+  return result;
 };
 
 const findUserByUsername = async (username) => {
