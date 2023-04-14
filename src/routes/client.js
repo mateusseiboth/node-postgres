@@ -2,19 +2,20 @@ const express = require('express');
 const router = express.Router();
 const clientController = require('../controllers/client');
 const { verifyToken } = require('../middlewares/auth');
+const rateLimit = require('../middlewares/rateLimit');
 
-router.post('/new', verifyToken, clientController.createClient, (req, res) => {
+router.post('/new', rateLimit, verifyToken, clientController.createClient, (req, res) => {
   res.status(201).json({message: "Client criado"})
 });
 
-router.delete('/:id', verifyToken, clientController.deleteClient, (req, res) => {
+router.delete('/:id', rateLimit, verifyToken, clientController.deleteClient, (req, res) => {
   res.status(200).json({ message: 'Client excluído com sucesso' });
 });
 
-router.put('/update', verifyToken, clientController.updateClient, (req, res) => {
+router.put('/update', rateLimit, verifyToken, clientController.updateClient, (req, res) => {
     res.status(200).json({message: 'Client atualizado com sucesso'})
 });
 
-router.get('/list', verifyToken, clientController.listarCliente, (req, res)=>{});
+router.get('/list', rateLimit, verifyToken, clientController.listarCliente, (req, res)=>{});
 
 module.exports = router;
