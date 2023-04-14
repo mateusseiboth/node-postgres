@@ -209,7 +209,6 @@ The `src/api` folder contains all the application's source code and is organized
   ```
   
 </details>
----
 
 ### Car Routes
 
