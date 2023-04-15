@@ -34,13 +34,19 @@ exports.authenticateUser = async (req, res) => {
     const user = await UserModel.findUserByUsername(username);
 
     if (!user) {
-      return res.status(401).json({ error: 'Invalid username or password' });
+      return res.status(401).send({
+        "result": false,
+        "content": "Usuário ou senha inválido",
+    });
     }
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
 
     if (!isPasswordValid) {
-      return res.status(401).json({ error: 'Invalid username or password' });
+      res.status(401).send({
+        "result": false,
+        "content": "Usuário ou senha inválido",
+    });
     }
 
     const payload = {id: user.id};
