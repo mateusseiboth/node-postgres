@@ -5,7 +5,12 @@ const { verifyToken } = require('../middlewares/auth');
 const rateLimit = require('../middlewares/rateLimit');
 
 router.post('/new', rateLimit, verifyToken, carController.createCar, (req, res) => {
-  res.status(201).json({message: "Car criado"})
+  res.status(201).send(
+    {
+      "result": true,
+      "content": "Carro inserido com sucesso",
+      "tipo": "success"
+    });
 });
 
 router.delete('/:id', rateLimit, verifyToken, carController.deleteCar, (req, res) => {
