@@ -4,8 +4,18 @@ const cors = require('cors');
 const router = require('./routes/index');
 const pool = require('./database/db');
 
-app.use(cors());
+
+//permite o acesso a API de qualquer origem
+const corsOptions = {
+  origin: function(origin, callback) {
+    callback(null, true);
+  }
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
+
+
 const appBase = '/api/v1'
 
 app.use(appBase, router);
