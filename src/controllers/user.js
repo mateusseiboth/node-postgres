@@ -27,6 +27,17 @@ exports.createUser = async (req, res) => {
   }
 };
 
+exports.renewToken = async (user, res) => {
+  try {
+
+    const payload = {id: user.id};
+    const token = generateToken(payload);
+    res.status(200).json({ token });
+  } catch (err) {
+    
+  }
+}
+
 exports.authenticateUser = async (req, res) => {
   
   try {
@@ -34,13 +45,19 @@ exports.authenticateUser = async (req, res) => {
     const user = await UserModel.findUserByUsername(username);
 
     if (!user) {
-      return res.status(401).json({ error: 'Invalid username or password' });
+      return res.status(401).send({
+        "result": false,
+        "content": "Usuário ou senha inválido",
+    });
     }
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
 
     if (!isPasswordValid) {
-      return res.status(401).json({ error: 'Invalid username or password' });
+      res.status(401).send({
+        "result": false,
+        "content": "Usuário ou senha inválido",
+    });
     }
 
     const payload = {id: user.id};
