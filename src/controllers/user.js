@@ -27,6 +27,17 @@ exports.createUser = async (req, res) => {
   }
 };
 
+exports.renewToken = async (user, res) => {
+  try {
+
+    const payload = {id: user.id};
+    const token = generateToken(payload);
+    res.status(200).json({ token });
+  } catch (err) {
+    
+  }
+}
+
 exports.authenticateUser = async (req, res) => {
   
   try {
