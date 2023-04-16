@@ -54,7 +54,12 @@ const updateClient = async (req, res) => {
       res.status(200).json({ message: 'ok' });
     } catch (error) {
       console.error(error);
-      res.status(500).json({ error: 'Erro ao deletar cliente' });
+      res.status(500).send(
+        {
+          "result": true,
+          "content": "Erro ao deletar cliente",
+          "tipo": "error"
+        });
     }
   };
 

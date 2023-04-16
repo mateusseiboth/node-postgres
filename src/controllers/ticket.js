@@ -6,7 +6,12 @@ const createTicket = async (req, res, next) => {
     next();
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Erro ao criar Ticket' });
+    res.status(500).send(
+      {
+        "result": true,
+        "content": "Erro ao criar ticket",
+        "tipo": "error"
+      });
   }
 };
 
