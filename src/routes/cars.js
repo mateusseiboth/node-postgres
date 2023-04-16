@@ -18,7 +18,12 @@ router.delete('/:id', rateLimit, verifyToken, carController.deleteCar, (req, res
 });
 
 router.put('/update', rateLimit, verifyToken, carController.updateCar, (req, res) => {
-    res.status(200).json({message: 'car atualizado com sucesso'})
+    res.status(200).send(
+      {
+        "result": true,
+        "content": "Carro atualizado com sucesso",
+        "tipo": "success"
+      });
 });
 
 router.get('/list', rateLimit, verifyToken, carController.listCar, (req, res) => {
