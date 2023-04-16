@@ -13,4 +13,10 @@ router.get('/me', rateLimit,verifyToken, (req, res) => {
   res.status(200).json({ user });
 });
 
+router.post('/renewToken',rateLimit,verifyToken, (req, res) => {
+  const user = req.user;
+  UserController.renewToken(user, res);
+  });
+
+
 module.exports = router;
