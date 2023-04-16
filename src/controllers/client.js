@@ -6,7 +6,12 @@ const createClient = async (req, res, next) => {
     const newClient = await Client.insertClient(client);
     next();
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    res.status(500).send(
+      {
+        "result": true,
+        "content": "Erro ao criar cliente",
+        "tipo": "error"
+      });
   }
 };
 
@@ -25,10 +30,20 @@ const updateClient = async (req, res) => {
     try {
       const client = req.body;
       await Client.updateClient(client);
-      res.status(200).json({ message: 'ok' });
+      res.status(200).send(
+        {
+          "result": true,
+          "content": "Sucesso ao atualizar cliente",
+          "tipo": "success"
+        });
     } catch (error) {
       console.error(error);
-      res.status(500).json({ error: 'Erro ao atualizar client' });
+      res.status(500).send(
+        {
+          "result": true,
+          "content": "Erro ao atualizar cliente",
+          "tipo": "error"
+        });
     }
   };
   

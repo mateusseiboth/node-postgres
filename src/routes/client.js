@@ -5,7 +5,12 @@ const { verifyToken } = require('../middlewares/auth');
 const rateLimit = require('../middlewares/rateLimit');
 
 router.post('/new', rateLimit, verifyToken, clientController.createClient, (req, res) => {
-  res.status(201).json({message: "Client criado"})
+  res.status(201).send(
+    {
+      "result": true,
+      "content": "Sucesso ao criar cliente",
+      "tipo": "success"
+    });
 });
 
 router.delete('/:id', rateLimit, verifyToken, clientController.deleteClient, (req, res) => {
@@ -13,7 +18,12 @@ router.delete('/:id', rateLimit, verifyToken, clientController.deleteClient, (re
 });
 
 router.put('/update', rateLimit, verifyToken, clientController.updateClient, (req, res) => {
-    res.status(200).json({message: 'Client atualizado com sucesso'})
+  res.status(200).send(
+    {
+      "result": true,
+      "content": "Sucesso ao atualizar cliente",
+      "tipo": "success"
+    });
 });
 
 router.get('/list', rateLimit, verifyToken, clientController.listarCliente, (req, res)=>{});
