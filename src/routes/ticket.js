@@ -5,7 +5,12 @@ const { verifyToken } = require('../middlewares/auth');
 const rateLimit = require('../middlewares/rateLimit');
 
 router.post('/new', rateLimit, verifyToken, ticketController.createTicket, (req, res) => {
-  res.status(201).json({message: "Ticket criado"})
+  res.status(201).send(
+    {
+      "result": true,
+      "content": "Sucesso ao criar ticket",
+      "tipo": "success"
+    });
 });
 
 router.put('/:id', rateLimit, verifyToken, ticketController.encerrarTicket, (req, res) => {
