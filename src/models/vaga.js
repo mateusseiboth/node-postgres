@@ -11,7 +11,7 @@ const insertVaga = async () => {
 
 const listarVagas = async () =>{
   const query ={
-    text: 'select * from vaga'
+    text: 'select * from vaga order by id'
   };
   const result = await pool.query(query);
   return result.rows;
