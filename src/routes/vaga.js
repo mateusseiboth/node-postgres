@@ -5,7 +5,7 @@ const { verifyToken } = require('../middlewares/auth');
 const rateLimit = require('../middlewares/rateLimit');
 
 router.get('/new', rateLimit, verifyToken, vagaController.createVaga, (req, res) => {
-  res.status(201).json({message: "Vaga criada"})
+  res.status(201).json({message: "Vaga criada", result: "true"})
 });
 
 router.delete('/:id', rateLimit, verifyToken, vagaController.deleteVaga, (req, res) => {
