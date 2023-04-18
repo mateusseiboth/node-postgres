@@ -15,7 +15,7 @@ const listCar = async () => {
     const query = {
       text: `select car.id id, car.placa placa, car.cliente_id cliente_id, cli.nome as cliente_nome 
       from carro car
-      full join cliente cli
+      left join cliente cli
       on cli.id = car.cliente_id`,
      
     };
