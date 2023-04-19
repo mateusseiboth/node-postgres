@@ -6,7 +6,12 @@ const createCar = async (req, res, next) => {
     const novoCar = await Car.insertCar(car);
     next();
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    res.status(500).send(
+      {
+        "result": true,
+        "content": "Erro ao atualizar carro",
+        "tipo": "error"
+      });
   }
 };
 
