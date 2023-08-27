@@ -7,29 +7,12 @@ const rateLimit = require('../middlewares/rateLimit');
 const createRoute = () => {
     function start() {
         const controller = createController();
-        router.post('/new', rateLimit, verifyToken, controller.start().create, (req, res) => {
-            res.status(201).send({
-                "result": true,
-                "content": "Carro inserido com sucesso",
-                "tipo": "success"
-            });
-        });
 
-        router.delete('/:id', rateLimit, verifyToken, controller.start().deleta, (req, res) => {
-            res.status(200).json({ message: 'car excluído com sucesso' });
-        });
+        router.post('/new', rateLimit, verifyToken, controller.start().create);
+        router.delete('/:id', rateLimit, verifyToken, controller.start().deleta);
+        router.put('/update', rateLimit, verifyToken, controller.start().update);
+        router.get('/list', rateLimit, verifyToken, controller.start().list);
 
-        router.put('/update', rateLimit, verifyToken, controller.start().update, (req, res) => {
-            res.status(200).send({
-                "result": true,
-                "content": "Carro atualizado com sucesso",
-                "tipo": "success"
-            });
-        });
-
-        router.get('/list', rateLimit, verifyToken, controller.start().list, (req, res) => {
-
-        });
         return router;
     }
 

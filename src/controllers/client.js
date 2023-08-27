@@ -1,68 +1,123 @@
-const Client = require('../models/client');
+const createModel = require('../models/client');
 
-const createClient = async (req, res, next) => {
-  try {
-    const client = req.body;
-    const newClient = await Client.insertClient(client);
-    next();
-  } catch (err) {
-    res.status(500).send(
-      {
-        "result": true,
-        "content": "Erro ao criar cliente",
-        "tipo": "error"
-      });
-  }
-};
-
-
-const listarCliente = async (req, res) => {
-  try{
-    const clientes = await Client.listarCliente();
-    res.send(clientes);
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({error: err.message});
-  }
-};
-
-const updateClient = async (req, res) => {
-    try {
-      const client = req.body;
-      await Client.updateClient(client);
-      res.status(200).send(
-        {
-          "result": true,
-          "content": "Sucesso ao atualizar cliente",
-          "tipo": "success"
-        });
-    } catch (error) {
-      console.error(error);
-      res.status(500).send(
-        {
-          "result": true,
-          "content": "Erro ao atualizar cliente",
-          "tipo": "error"
-        });
+const createController = () => {
+    function validar(nome, cpf, telefone, id, method) {
+        try {
+            let message = []
+            if (method === 'deleta') {
+                if (id == null || id == '') {
+                    message.push('Id não informado');
+                } else {
+                    return true;
+                }
+            }
+            if (method === "update") {
+                if (id == null || id == '') {
+                    message.push('Id não informado');
+                }
+            }
+            if (!nome || nome === '' || nome === null || nome === undefined) {
+                message.push('Nome não informado');
+            }
+            if (!cpf || cpf === '' || cpf === null || cpf === undefined) {
+                message.push('cpf não informado');
+            }
+            if (!telefone || telefone === '' || telefone === null || telefone === undefined) {
+                message.push('telefone não informado');
+            }
+            if (message.length > 0) {
+                throw new Error(message)
+            }
+            return true;
+        } catch (err) {
+            throw new Error([err])
+        }
     }
-  };
-  
-  const deleteClient = async (req, res) => {
-    try {
-      const { id } = req.params;
-      await Client.deleteClient(id);
-      res.status(200).json({ message: 'ok' });
-    } catch (error) {
-      console.error(error);
-      res.status(500).send(
-        {
-          "result": true,
-          "content": "Erro ao deletar cliente",
-          "tipo": "error"
-        });
+
+    function start() {
+        const model = createModel();
+        const create = async(req, res, next) => {
+            try {
+                const client = req.body;
+                validar(client.nome, client.cpf, client.telefone, null, 'create');
+                const newClient = await model.start().insert(client);
+                res.status(201).json({
+                    "result": true,
+                    "content": "Sucesso ao criar cliente",
+                    "tipo": "success"
+                })
+            } catch (err) {
+                res.status(400).send({
+                    "result": true,
+                    "content": "Erro ao criar cliente",
+                    "tipo": "error",
+                    "message": err.message
+                });
+            }
+        };
+        const list = async(req, res) => {
+            try {
+                const clientes = await model.start().list();
+                res.status(200).json({ clientes: clientes });
+            } catch (error) {
+                console.log(error);
+                res.status(400).send({
+                    "result": true,
+                    "content": "Erro ao atualizar cliente",
+                    "tipo": "error",
+                    "message": error.message
+                });
+            }
+        };
+        const update = async(req, res) => {
+            try {
+                const client = req.body;
+                validar(client.nome, client.cpf, client.telefone, client.id, 'update');
+                await model.start().update(client);
+                res.status(200).send({
+                    "result": true,
+                    "content": "Sucesso ao atualizar cliente",
+                    "tipo": "success"
+                });
+            } catch (error) {
+                console.error(error);
+                res.status(400).send({
+                    "result": true,
+                    "content": "Erro ao atualizar cliente",
+                    "tipo": "error",
+                    "message": error.message
+                });
+            }
+        };
+        const deleta = async(req, res) => {
+            try {
+                const { id } = req.params;
+                validar(null, null, null, id, 'deleta');
+                await model.start().deleta(id);
+                res.status(202).send({
+                    "result": true,
+                    "content": "Sucesso ao deletar cliente",
+                    "tipo": "success"
+                });
+            } catch (error) {
+                console.error(error);
+                res.status(400).send({
+                    "result": true,
+                    "content": "Erro ao deletar cliente",
+                    "tipo": "error",
+                    "message": error.message
+                });
+            }
+        }
+        return {
+            create: create,
+            deleta: deleta,
+            list: list,
+            update: update
+        }
     }
-  };
+    return { start: start }
+}
 
 
-
-module.exports = { createClient, updateClient, deleteClient, listarCliente };
+module.exports = createController;
