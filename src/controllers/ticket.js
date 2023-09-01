@@ -1,4 +1,4 @@
-//to-do Modificar pattern para Factory
+//TODO - Modificar pattern para Factory
 
 
 const Ticket = require('../models/ticket');

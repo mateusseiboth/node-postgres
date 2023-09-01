@@ -1,4 +1,3 @@
-//to-do Modificar pattern para Factory
 const express = require('express');
 const router = express.Router();
 const tipoController = require('../controllers/tipo');
