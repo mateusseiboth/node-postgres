@@ -85,6 +85,7 @@ const createModel = () => {
         if (typeof methods[metodo] === 'function') {
             return methods[metodo](); // Chama a função utilizando o nome do método passado
         } else {
+            throw new Error('Método não encontrado!');
             console.log('Método não encontrado!');
         }
     }
