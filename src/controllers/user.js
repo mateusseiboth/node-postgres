@@ -1,4 +1,5 @@
-const createModel = require('../models/user');
+const createModel = require('../models/model');
+const model = createModel();
 
 const bcrypt = require('bcrypt');
 const { generateToken } = require('../utils/jwt');
@@ -30,7 +31,6 @@ const createController = () => {
     }
 
     function start() {
-        const model = createModel();
         const create = async(req, res) => {
             try {
                 //Valida os dados enviados
@@ -45,8 +45,7 @@ const createController = () => {
                     password: hashedPassword
                 };
                 //Chama a function para inserir no banco
-                const result = await model.start().insert(user);
-
+                const result = await model.start('usuario', 'create', user);
                 if (result.rowCount === 1) {
                     res.status(201).json({
                         "result": true,
@@ -87,7 +86,7 @@ const createController = () => {
                 const { username, password } = req.body;
                 validar(username, password, null, 'authenticate');
                 //Verifica se encontrou um usuário com o username informado
-                const user = await model.start().findByUsername(username);
+                const user = await model.start('usuario', 'findBy', { username: username });
                 if (!user) {
                     return res.status(401).send({
                         "result": false,
@@ -97,7 +96,7 @@ const createController = () => {
                     });
                 }
                 //Verifica se a senha está correta 
-                const isPasswordValid = await bcrypt.compare(password, user.password);
+                const isPasswordValid = await bcrypt.compare(password, user[0].password);
                 if (!isPasswordValid) {
                     res.status(401).send({
                         "result": false,

@@ -1,31 +1,34 @@
 //to-do Modificar pattern para Factory
 
-const Tipo = require('../models/tipo');
+const createModel = require('../models/model');
+const model = createModel();
+const create = async(req, res) => {
 
-const createTipo = async(req, res, next) => {
     try {
+        console.log(req.body)
         const tipo = req.body;
-        const novoTipo = await Tipo.insertTipo(tipo);
-        next();
+        const newInsert = await model.start('tipo', 'create', tipo);
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        console.log(err)
+        res.status(400).json({ error: err });
     }
 };
 
-const updateTipo = async(req, res) => {
+const update = async(req, res) => {
     try {
         const tipo = req.body;
-        await Tipo.updateTipo(tipo);
-        res.status(200).json({ message: 'ok' });
+        const result = await model.start('tipo', 'update', tipo);
+        res.status(200).json({ message: 'ok', data: result });
     } catch (error) {
         console.error(error);
-        res.status(500).json({ error: 'Erro ao atualizar tipo' });
+        res.status(400).json({ error: 'Erro ao atualizar tipo' });
     }
 };
 
-const listarTipos = async(req, res) => {
+const list = async(req, res) => {
     try {
-        const tipos = await Tipo.listarTipos();
+        const tipos = await model.start('tipo', 'find');
+        console.log(tipos)
         res.send(tipos);
     } catch (error) {
         console.log(error);
@@ -33,15 +36,27 @@ const listarTipos = async(req, res) => {
     }
 };
 
-const deleteTipo = async(req, res) => {
+const findBy = async(req, res) => {
+    try {
+        const tipo = req.body;
+        const tipos = await model.start('tipo', 'findBy', tipo);
+        console.log(tipos)
+        res.send(tipos);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ error: 'Erro ao listar tipo' });
+    }
+};
+
+const deleta = async(req, res) => {
     try {
         const { id } = req.params;
-        await Tipo.deleteTipo(id);
-        res.status(200).json({ message: 'ok' });
+        const result = await model.start('tipo', 'deleta', { id: id });
+        res.status(200).json({ message: 'ok', data: result });
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'Erro ao deletar tipo' });
     }
 };
 
-module.exports = { createTipo, deleteTipo, updateTipo, listarTipos };
+module.exports = { create, deleta, update, list, findBy };

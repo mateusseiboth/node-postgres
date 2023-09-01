@@ -6,7 +6,6 @@ const ticketRouter = require('./ticket');
 const vagaRouter = require('./vaga');
 const tipoRouter = require('./tipo');
 
-
 const createRoute = () => {
     function start() {
         console.log('[ROUTES] Starting...');
@@ -21,7 +20,6 @@ const createRoute = () => {
         router.use('/ticket', ticketRouter);
         router.use('/tipo', tipoRouter);
         router.use('/vaga', vagaRouter);
-
         console.log('[ROUTES] Done.');
         return router;
     }

@@ -1,8 +1,8 @@
 //to-do Modificar pattern para Factory
 
 
-const pool = require('../database/db');
-
+const createDatabase = require('../database/db');
+const pool = createDatabase().start();
 const insertTipo = async(tipo) => {
     const { preco, descr } = tipo;
     const query = {

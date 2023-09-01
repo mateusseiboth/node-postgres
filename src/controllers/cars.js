@@ -1,4 +1,5 @@
-const createModel = require('../models/cars');
+const createModel = require('../models/model');
+const model = createModel();
 
 
 const createController = () => {
@@ -34,13 +35,11 @@ const createController = () => {
     }
 
     function start() {
-        const model = createModel();
         const create = async(req, res, next) => {
             try {
                 const car = req.body;
                 validar(car.placa, car.cliente_id, null, "create");
-
-                await model.start().insert(car);
+                const newInsert = await model.start('carro', 'create', car);
                 res.status(200).json({
                     "result": true,
                     "content": "Carro inserido com sucesso",
@@ -58,7 +57,7 @@ const createController = () => {
         };
         const list = async(req, res) => {
             try {
-                const cars = await model.start().list();
+                const cars = await model.start('carro', 'find');
                 res.status(200).json({ carros: cars });
             } catch (err) {
                 res.status(400).json({
@@ -74,7 +73,7 @@ const createController = () => {
             try {
                 const car = req.body;
                 validar(car.placa, car.cliente_id, car.id, "update");
-                await model.start().update(car);
+                await model.start('carro', 'update', car);
                 res.status(200).json({
                     "result": true,
                     "content": "Carro atualizado com sucesso",
@@ -96,7 +95,7 @@ const createController = () => {
             try {
                 const { id } = req.params;
                 validar(null, null, id, "deleta");
-                await model.start().deleta(id);
+                const result = await model.start('carro', 'deleta', { id: id });
                 res.status(202).json({
                     "result": true,
                     "content": "Carro deletado com sucesso",

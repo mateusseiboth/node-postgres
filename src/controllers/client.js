@@ -1,4 +1,5 @@
-const createModel = require('../models/client');
+const createModel = require('../models/model');
+const model = createModel();
 
 const createController = () => {
     function validar(nome, cpf, telefone, id, method) {
@@ -35,12 +36,11 @@ const createController = () => {
     }
 
     function start() {
-        const model = createModel();
         const create = async(req, res, next) => {
             try {
                 const client = req.body;
                 validar(client.nome, client.cpf, client.telefone, null, 'create');
-                const newClient = await model.start().insert(client);
+                const newClient = await model.start('cliente', 'create', client);
                 res.status(201).json({
                     "result": true,
                     "content": "Sucesso ao criar cliente",
@@ -57,7 +57,7 @@ const createController = () => {
         };
         const list = async(req, res) => {
             try {
-                const clientes = await model.start().list();
+                const clientes = await model.start('cliente', 'find');
                 res.status(200).json({ clientes: clientes });
             } catch (error) {
                 console.log(error);
@@ -73,7 +73,7 @@ const createController = () => {
             try {
                 const client = req.body;
                 validar(client.nome, client.cpf, client.telefone, client.id, 'update');
-                await model.start().update(client);
+                const clientes = await model.start('cliente', 'update', client);
                 res.status(200).send({
                     "result": true,
                     "content": "Sucesso ao atualizar cliente",
@@ -93,7 +93,7 @@ const createController = () => {
             try {
                 const { id } = req.params;
                 validar(null, null, null, id, 'deleta');
-                await model.start().deleta(id);
+                const clientes = await model.start('cliente', 'deleta', { id: id });
                 res.status(202).send({
                     "result": true,
                     "content": "Sucesso ao deletar cliente",
